@@ -35,7 +35,7 @@ const CalendarScreen = () => {
                 formattedDueDate = dueDate.toISOString().split("T")[0];
               }
             } else if (data.dueDate) {
-              // Handle if it's already a string or other format
+              // if it's already a string or other format
               const dueDate = new Date(data.dueDate);
               formattedDueDate = dueDate.toISOString().split("T")[0];
             }
@@ -48,8 +48,8 @@ const CalendarScreen = () => {
               dueDate: formattedDueDate,
               description: data.description || "",
             };
-          })
-          .filter(task => task.dueDate); // Filter out tasks with invalid dates
+          })// Filter out tasks with invalid dates
+          .filter(task => task.dueDate); 
         
         console.log("Processed Tasks:", fetchedTasks);
         
@@ -82,9 +82,9 @@ const CalendarScreen = () => {
         console.error("Error fetching tasks:", error);
       }
     };
-    
+    // Re-fetch when selected date changes
     fetchTasks();
-  }, [selectedDate]); // Re-fetch when selected date changes
+  }, [selectedDate]); 
   
   const handleDayPress = (day: { dateString: string }) => {
     console.log("Selected Day:", day.dateString);

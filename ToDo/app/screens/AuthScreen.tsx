@@ -19,10 +19,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 type RootStackParamList = {
   Auth: undefined;
   Landing: undefined;
-  MainTabs: undefined; // Changed from Home to MainTabs to match your navigator
+  MainTabs: undefined; 
 };
 
-// Fix useNavigation typing
 type NavigationProp = StackNavigationProp<RootStackParamList, "Auth">;
 
 const AuthScreen = () => {
@@ -42,8 +41,7 @@ const AuthScreen = () => {
     try {
       if (isLogin) {
         await login(email, password);
-        // Let the navigator automatically redirect based on auth state
-        // The AppNavigator will detect the user and show MainTabs
+        // navigator automatically redirect based on auth state
       } else {
         if (password.length < 6) {
           Alert.alert("Error", "Password must be at least 6 characters long.");
@@ -51,7 +49,8 @@ const AuthScreen = () => {
         }
         await register(email, password);
         Alert.alert("Success", "Account created! You can now log in.");
-        setIsLogin(true); // Switch to login mode after registration
+        // Switch to login mode after registration
+        setIsLogin(true); 
       }
     } catch (error: any) {
       let errorMessage = "Something went wrong. Please try again.";
@@ -135,7 +134,7 @@ const AuthScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFDE7", // Light yellow background matching landing page
+    backgroundColor: "#FFFDE7", 
   },
   scrollContainer: {
     flexGrow: 1,
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: "#FF85A2", // Pink button
+    backgroundColor: "#FF85A2", 
     padding: 15,
     borderRadius: 8,
     width: "100%",
@@ -183,19 +182,19 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   buttonText: {
-    color: "#173E7C", // Dark blue text matching landing page
+    color: "#173E7C", 
     fontWeight: "600",
     fontSize: 16,
   },
   toggleText: {
-    color: "#173E7C", // Dark blue text matching landing page
+    color: "#173E7C", 
     marginTop: 10,
     fontSize: 14,
   },
   decorationLine: {
     height: 4,
     width: 100,
-    backgroundColor: "#FFD54F", // Yellow matching landing page
+    backgroundColor: "#FFD54F", 
     marginTop: 40,
     borderRadius: 2,
   },

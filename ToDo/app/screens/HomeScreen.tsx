@@ -35,33 +35,32 @@ type RootStackParamList = {
 type NavigationProp = StackNavigationProp<RootStackParamList, "Auth">;
 type NavigationProp2 = StackNavigationProp<RootStackParamList, "Calendar">;
 
-// Enhanced color scheme with better contrast
 const customColors = {
   light: {
-    background: '#F8F9FA',    // Light background
-    text: '#212529',          // Dark text for better readability
-    primary: '#FFD54F',       // Yellow for buttons
-    secondary: '#ADB5BD',     // Medium gray for disabled elements
-    card: '#FFFFFF',          // White for cards
-    border: '#DEE2E6',        // Light gray for borders
-    danger: '#DC3545',        // Red for delete/logout
-    accent: '#F06292',        // Pink accent
-    accentDark: '#D81B60'     // Darker pink for emphasis
+    background: '#F8F9FA',    
+    text: '#212529',         
+    primary: '#FFD54F',       
+    secondary: '#ADB5BD',     
+    card: '#FFFFFF',          
+    border: '#DEE2E6',        
+    danger: '#DC3545',        
+    accent: '#F06292',       
+    accentDark: '#D81B60'     
   },
   dark: {
-    background: '#121212',    // Dark background
-    text: '#E9ECEF',          // Light text for better readability
-    primary: '#FFD54F',       // Keep the yellow for buttons
-    secondary: '#6C757D',     // Gray for disabled elements
-    card: '#1E1E1E',          // Darker gray for cards
-    border: '#343A40',        // Border color for dark mode
-    danger: '#F87171',        // Lighter red for dark mode
-    accent: '#AD1457',        // Dark pink accent
-    accentDark: '#D81B60'     // Brighter pink for emphasis
+    background: '#121212',    
+    text: '#E9ECEF',          
+    primary: '#FFD54F',       
+    secondary: '#6C757D',    
+    card: '#1E1E1E',         
+    border: '#343A40',       
+    danger: '#F87171',        
+    accent: '#AD1457',        
+    accentDark: '#D81B60'     
   }
 };
 
-// Enhanced motivational quotes
+//motivational quotes
 const motivationalQuotes = [
   "The secret of getting ahead is getting started.",
   "Don't wait. The time will never be just right.",
@@ -76,6 +75,7 @@ const motivationalQuotes = [
 const { width } = Dimensions.get('window');
 
 const HomeScreen = () => {
+  //navigation handle
   const navigation = useNavigation<NavigationProp>();
   const navigation2 = useNavigation<NavigationProp2>();
   const { user, logout } = useAuth();
@@ -131,7 +131,7 @@ const HomeScreen = () => {
       })
     ]).start();
     
-    // Keyboard listeners to adjust UI when keyboard appears
+    // Keyboard listener when keyboard appears
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -141,9 +141,6 @@ const HomeScreen = () => {
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        // if (newTodoTitle.trim() === '' && newTodoDescription.trim() === '') {
-        //   setAddingTask(false);
-        // }
       }
     );
 
@@ -160,13 +157,13 @@ const HomeScreen = () => {
     try {
       setLoading(true);
       const userTodos = await getTodos(user.uid);
-      // Sort todos: incomplete first, then by due date
+      // Sort todos: incomplete -> due date
       const sortedTodos = userTodos.sort((a, b) => {
-        // First by completion status
+        // completion status
         if (a.completed !== b.completed) {
           return a.completed ? 1 : -1;
         }
-        // Then by due date (most recent first)
+        // due date 
         const dateA = a.dueDate?.toDate() || new Date();
         const dateB = b.dueDate?.toDate() || new Date();
         return dateA.getTime() - dateB.getTime();
@@ -198,7 +195,8 @@ const HomeScreen = () => {
   
       const newTodo = { id: todoId, ...todoData, createdAt: new Date() as any };
       
-      // Add to top and re-sort the list
+      // Add to top  
+      // re-sort 
       const updatedTodos = [newTodo, ...todos].sort((a, b) => {
         if (a.completed !== b.completed) {
           return a.completed ? 1 : -1;
@@ -213,7 +211,7 @@ const HomeScreen = () => {
       setNewTodoDescription('');
       setNewTodoDueDate(new Date());
       
-      // Dismiss keyboard and hide form
+      // Dismiss keyboard 
       Keyboard.dismiss();
       setAddingTask(false);
     } catch (error) {
@@ -286,8 +284,8 @@ const HomeScreen = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      // The auth context will update the user state to null,
-      // which will trigger AppNavigator to show the non-authenticated flow
+      //auth context update the user state = null,
+      //trigger AppNavigator - show the non-authenticated flow
     } catch (error) {
       Alert.alert('Error', 'Failed to logout');
       console.error(error);
@@ -311,7 +309,7 @@ const HomeScreen = () => {
   const totalTasks = todos.length;
   const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
-  // Formatted date for display
+  // Formatted date 
   const formatDate = (date: Date) => {
     const options = { month: 'short', day: 'numeric', year: 'numeric' };
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -372,7 +370,7 @@ const HomeScreen = () => {
         transform: [{ translateY: slideAnim }],
         flex: 1
       }}>
-        {/* Header with image */}
+        {/* Header image */}
         <View style={styles.bannerContainer}>
           <Image 
             source={require("../../assets/images/Checklist.png")}  
@@ -383,7 +381,7 @@ const HomeScreen = () => {
           </View>
         </View>
         
-        {/* Main ScrollView that contains everything */}
+        {/* Main ScrollView */}
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
@@ -415,7 +413,7 @@ const HomeScreen = () => {
               </View>
             </View>
 
-            {/* Status summary with improved visual */}
+            {/* Status summary*/}
             <View style={[styles.statusCard, { 
               backgroundColor: colors.card, 
               borderColor: colors.border,
@@ -476,7 +474,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
 
-            {/* Add task button when not adding */}
+            {/* Add task button */}
             {!addingTask && (
               <TouchableOpacity 
                 style={[styles.addTaskButton, { backgroundColor: colors.primary }]}
@@ -486,7 +484,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
             )}
              
-            {/* Task input form when adding */}
+            {/* Task input form */}
             {addingTask && (
               <View style={styles.taskFormContainer}>
                 <View style={[styles.inputGroup, { 
@@ -524,7 +522,7 @@ const HomeScreen = () => {
                     <Text style={[styles.dateLabel, { color: colors.text }]}>Due date:</Text>
                     <TouchableOpacity 
                       onPress={() => setShowDatePicker(true)}
-                      style={[styles.dateButton, { padding: 10 }]} // Add padding to increase touch target
+                      style={[styles.dateButton, { padding: 10 }]} 
                     >
                       <Text style={[styles.dateButtonText, { color: colors.accent }]}>
                         {formatDate(newTodoDueDate)}
@@ -539,13 +537,11 @@ const HomeScreen = () => {
                     value={newTodoDueDate}
                     mode="date"
                     display="default"
-                    // In your DateTimePicker onChange handler, modify it like this:
                     onChange={(event, selectedDate) => {
                       setShowDatePicker(false);
                       if (selectedDate) {
                         setNewTodoDueDate(selectedDate);
                       }
-                      // Always keep the form open regardless of date selection
                       setAddingTask(true);
                     }}
                   />

@@ -27,6 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return () => unsubscribe();
     }, []);
 
+    //login option handle
     const handleLogin = async (email: string, password: string) => {
         try {
             await login(email, password);
@@ -43,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
     
-
+    //register user handle
     const handleRegister = async (email: string, password: string) => {
         try {
             const userCredential = await register(email, password);
@@ -52,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             console.error("Registration Error:", error);
         }
     };
-
+    //handle logout
     const handleLogout = async () => {
         try {
             await signOut();
